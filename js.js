@@ -6,7 +6,7 @@ const
     dividedOperator = document.getElementById('btn-divide'),
     multiplyOperator = document.getElementById('btn-multiply'),
     subtractOperator = document.getElementById('btn-subtract'),
-    equalOperator = document.getElementById('btn-subtract'),
+    equalOperator = document.getElementById('btn-equal'),
     addOperator = document.getElementById('btn-add'),
     //clear button
     allClear = document.getElementById('ac-btn'),
