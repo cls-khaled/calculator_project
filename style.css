@@ -17,20 +17,33 @@ body {
     height: 500px;
     background-color: lightgray;
     display: grid;
-    grid-template-columns: 4;
+    grid-template-columns: repeat(4 , 1fr);
 }
 
 .calc__monitor {
+    padding-right: 10px;
     overflow: hidden;
     grid-column: 2 / span 3;
     background-color: white;
-    padding: 0px 10px;
     height: 100%;
     text-align: right;
     font-size: 2em;
     height: 100px;
+    max-width: 320px;
     line-height: 100px;
     align-self: center;
+    & >  span {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    & > :nth-child(1){
+        max-width: 90%;
+    }
+    & > :nth-child(2){
+        text-align: center;
+        max-width: 10%;
+    }
 }
 
 .calc__btn {
