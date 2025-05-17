@@ -18,8 +18,8 @@ const
     clearEntry = document.getElementById('ce-btn');
 let
     // calculation values
-    isRealNumber = false;
-operator = null,
+    isRealNumber = false,
+    operator = null,
     lastNumber = null,
     currentNumber = 0,
     numberAsString = "";
@@ -40,6 +40,7 @@ function calculate(operator, lastValue, currentValue) {
 function isLimitExceeded(value) {
     return value.length > MAX_MONITOR_LENGTH;
 }
+
 /* ##### Events #####*/
 //-------- operations buttons event
 let operationButtons = [
@@ -69,13 +70,16 @@ let digitButtons = [
 for (let digitButton of digitButtons) {
     digitButton.addEventListener('click', () => handleDigitButtonClick(digitButton));
 }
+//
 clearEntry.addEventListener('click', handleClearEntryClick);
 allClear.addEventListener('click', handleAllClearClick)
+document.addEventListener('keydown', handleAllKeyPress);
 //--------
+
 
 /* ##### Event Handler #####*/
 function handleOperationButtonClick(operationButton) {
-    operator = operationButton.innerText != EQUAL ? operationButton.innerText : operator ;
+    operator = operationButton.innerText != EQUAL ? operationButton.innerText : operator;
     monitorOperator.innerText = operator != EQUAL ? operator : "";
     //
     if (lastNumber && operator) {
@@ -86,16 +90,15 @@ function handleOperationButtonClick(operationButton) {
         lastNumber = currentNumber;
     }
     //for next operation 
-    if(operationButton.innerText == EQUAL) monitorOperator.innerText = ""; 
+    if (operationButton.innerText == EQUAL) monitorOperator.innerText = "";
     numberAsString = "";
-    isRealNumber=false;
+    isRealNumber = false;
     //
     displayCalculatorState();
 }
 
 function handleDigitButtonClick(digitButton) {
-    let digit = digitButton.innerText;
-    //prevent multiple dots in number 
+    let digit = digitButton.innerText; //prevent multiple dots in number 
     if (digit == '.') {
         if (!isRealNumber) {
             numberAsString += digit;
@@ -113,6 +116,7 @@ function handleDigitButtonClick(digitButton) {
 }
 
 function handleClearEntryClick() {
+    isRealNumber = false;
     currentNumber = 0;
     numberAsString = "";
     monitorValue.innerText = "";
@@ -121,10 +125,41 @@ function handleClearEntryClick() {
 function handleAllClearClick() {
     monitorValue.innerText = "";
     monitorOperator.innerHTML = "";
+    isRealNumber = false;
     currentNumber = 0;
     lastNumber = null;
     operator = null;
     numberAsString = "";
+}
+
+function handleAllKeyPress(event) {
+    const key = event.key;
+    // Handle number keys
+    if (/[0-9]/.test(key)) {
+        button = document.getElementById( `btn-${key}`);
+        if (button) button.click();
+    }
+    //Handle operation keys
+    const operationKeys ={
+        '+' : 'btn-add',
+        '-' : 'btn-subtract',
+        '*' : 'btn-multiply',
+        '/' : 'btn-divide',
+        '=' : 'btn-equal',
+        'Enter' : 'btn-equal'
+    }
+    // Handle operation keys
+    if (/[+,\-,\/,*,=]/.test(key) || key =="Enter") {
+        button = document.getElementById( operationKeys[key]);
+        if (button) button.click();
+    }
+    // Handle AC/EC keys
+    if (/[a,A]/.test(key) || key == 'Escape') {
+        handleAllClearClick();
+    }else if (/[c,C]/.test(key)){
+        handleClearEntryClick();
+    }
+    console.log(key);
 }
 
 /* ##### Testing #####*/
@@ -136,7 +171,6 @@ function displayCalculatorState() {
         '\n| monitor value : ', monitorValue.innerText,
         '\n| monitor operator : ', monitorOperator.innerText,
         '\n| result : ', calculate(operator, lastNumber, currentNumber)
-
     );
 }
 
