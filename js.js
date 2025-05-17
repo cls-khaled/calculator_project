@@ -1,7 +1,8 @@
 // UI Elements 
 const
     //result monitor
-    monitor = document.getElementById('monitor'),
+    monitorValue = document.getElementById('monitor-value'),
+    monitorOperator = document.getElementById('monitor-operator'),
     // operators buttons 
     dividedOperator = document.getElementById('btn-divide'),
     multiplyOperator = document.getElementById('btn-multiply'),
@@ -32,10 +33,11 @@ const
 
 
 
-// element existance test (REMOVE THIS CODE)
-console.log(
-    `Elements Variable Test: 
-variable 'monitor' ${monitor ? '[Pass]' : '[Fail]'}
+// element existance test; 
+console.debug(
+`Elements Variable Test: 
+variable 'monitor value' ${monitorValue ? '[Pass]' : '[Fail]'}
+variable 'monitor operator' ${monitorOperator ? '[Pass]' : '[Fail]'}
 variable 'dividedOperator' ${dividedOperator ? '[Pass]' : '[Fail]'} 
 variable 'multiplyOperator' ${multiplyOperator ? '[Pass]' : '[Fail]'} 
 variable 'subtractOperator' ${subtractOperator ? '[Pass]' : '[Fail]'} 
